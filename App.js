@@ -1,20 +1,32 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { Platform, StyleSheet, Text, View } from "react-native";
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+import CategoryMealScreen from "./screens/CategoryMealScreen";
+import MealDetailScreen from "./screens/MealDetailScreen";
+import MyTabs from "./components/MyTabs";
+import Colors from "./constants/Colors"
+const Stack = createNativeStackNavigator();
+const stylesNavigator = {
+  headerStyle: {
+    backgroundColor: Platform.OS === 'android' ? Colors.primaryColor : ''
+  },
+  headerTintColor:
+    Platform.OS === 'android' ? 'white' : Colors.primaryColor,
+  
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default function App() {
+  return(
+    <NavigationContainer>
+    <Stack.Navigator   screenOptions={stylesNavigator} >
+
+      <Stack.Screen name="Meal Carergorys" options={{headerShown: false}}   component={MyTabs} />
+      <Stack.Screen name="CategoryMealScreen" component={CategoryMealScreen} />
+      <Stack.Screen name="MealDetailScreen" component={MealDetailScreen} />
+    </Stack.Navigator>
+  </NavigationContainer>
+  ) 
+}
+
